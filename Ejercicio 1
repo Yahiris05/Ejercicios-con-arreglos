@@ -1,1 +1,63 @@
-# Leer 10 enteros, almacenarlos en un arreglo y determinar en qué posición del arreglo está el mayor número leído.
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numeros = new int[10];
+        Console.WriteLine("Ingrese 10 números enteros:");
+        for (int i = 0; i < 10; i++)
+        {
+            numeros[i] = int.Parse(Console.ReadLine());
+        }
+
+        # Ejercicio 1: Mayor número y su posición
+        int max = numeros.Max();
+        int posMax = Array.IndexOf(numeros, max);
+        Console.WriteLine($"El número mayor es {max} y se encuentra en la posición {posMax}.");
+
+        # Ejercicio 2: Mayor número par y su posición
+        int maxPar = numeros.Where(n => n % 2 == 0).DefaultIfEmpty(int.MinValue).Max();
+        int posMaxPar = Array.IndexOf(numeros, maxPar);
+        Console.WriteLine(maxPar == int.MinValue ? "No hay números pares." : $"El número par mayor es {maxPar} y se encuentra en la posición {posMaxPar}.");
+
+        # Ejercicio 3: Mayor número primo y su posición
+        int maxPrimo = numeros.Where(EsPrimo).DefaultIfEmpty(int.MinValue).Max();
+        int posMaxPrimo = Array.IndexOf(numeros, maxPrimo);
+        Console.WriteLine(maxPrimo == int.MinValue ? "No hay números primos." : $"El número primo mayor es {maxPrimo} y se encuentra en la posición {posMaxPrimo}.");
+
+        # Ejercicio 8: Contar números negativos
+        int negativos = numeros.Count(n => n < 0);
+        Console.WriteLine($"Cantidad de números negativos: {negativos}.");
+
+        # Ejercicio 9: Factorial de cada número
+        long[] factoriales = numeros.Select(n => Factorial(Math.Abs(n))).ToArray();
+        Console.WriteLine("Factoriales de los números ingresados:");
+        for (int i = 0; i < 10; i++)
+        {
+            Console.WriteLine($"Número: {numeros[i]}, Factorial: {factoriales[i]}");
+        }
+    }
+
+    static bool EsPrimo(int num)
+    {
+        if (num < 2) return false;
+        for (int i = 2; i * i <= num; i++)
+        {
+            if (num % i == 0) return false;
+        }
+        return true;
+    }
+
+    static long Factorial(int num)
+    {
+        long resultado = 1;
+        for (int i = 2; i <= num; i++)
+        {
+            resultado *= i;
+        }
+        return resultado;
+    }
+}
+
